@@ -9,7 +9,7 @@ class Rutina {
 }
 
 class Running inherits Rutina {
-    var property intensidad 
+    var intensidad 
 
     override method intensidad() {
         return  intensidad
@@ -21,6 +21,7 @@ class Running inherits Rutina {
 }
 
 class Maraton inherits Running {
+
     override method caloriasQuemadas(tiempo) {
         return super(tiempo) * 2
     }
@@ -49,25 +50,30 @@ class RemoDeCompeticion inherits Remo {
 }
 
 class Persona {
-    var property peso
+    var peso
 
     method hacerRutina(rutina) {
-        if (self.puedeHacer(rutina)) {
-            peso = peso - self.pesoPerdido(rutina)
-        }
+        validarSiPuede(rutina)
+        peso = peso - self.pesoPerdido(rutina)
     }
 
     method pesoPerdido(rutina) {
         return rutina.caloriasQuemadas(self.tiempoDeEjercicio()) / self.kilosPorCaloria()
     }
 
+    method validarSiPuede(rutina) {
+        if(not self.puedeHacer(rutina){
+            self.error(self.cartel(rutina))
+    }
+
     method tiempoDeEjercicio()
     method kilosPorCaloria()
     method puedeHacer(rutina)
+    method cartel(rutina)
 }
 
 class Sedentario inherits Persona {
-    var property tiempoDeEjercicio 
+    var tiempoDeEjercicio 
 
     override method tiempoDeEjercicio() {
         return tiempoDeEjercicio
@@ -79,6 +85,10 @@ class Sedentario inherits Persona {
 
     override method puedeHacer(rutina) {
         return peso > 50
+    }
+
+    override method cartel(rutina) {    
+        return "No pesa mas de 50"
     }
 }
 
@@ -96,13 +106,17 @@ class Atleta inherits Persona {
         return rutina.caloriasQuemadas(self.tiempoDeEjercicio()) > 10000
     }
 
+    override method cartel(rutina) {    
+        return "No quema mas de 10.000 calorias"
+    }
+    
     override method pesoPerdido(rutina) {
         return super(rutina) - 1
     }
 }
 
 class Predio {
-    const property rutinas = []
+    const rutinas = []
 
     method totalCaloriasPara(persona) {
         return rutinas.sum({ rutina => rutina.caloriasQuemadas(persona.tiempoDeEjercicio()) })
@@ -118,7 +132,7 @@ class Predio {
 }
 
 class ClubBarrial {
-    const property predios = []
+    const predios = []
 
     method mejorPredioPara(persona) {
         return predios.max({ predio => predio.totalCaloriasPara(persona) })
