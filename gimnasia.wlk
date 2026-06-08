@@ -50,10 +50,10 @@ class RemoDeCompeticion inherits Remo {
 }
 
 class Persona {
-    var peso
+    var property peso 
 
     method hacerRutina(rutina) {
-        validarSiPuede(rutina)
+        self.validarSiPuede(rutina)
         peso = peso - self.pesoPerdido(rutina)
     }
 
@@ -62,8 +62,9 @@ class Persona {
     }
 
     method validarSiPuede(rutina) {
-        if(not self.puedeHacer(rutina){
+        if(not self.puedeHacer(rutina)){
             self.error(self.cartel(rutina))
+        }
     }
 
     method tiempoDeEjercicio()

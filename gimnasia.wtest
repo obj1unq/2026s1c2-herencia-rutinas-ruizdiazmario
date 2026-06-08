@@ -86,11 +86,12 @@ describe "rutinas" {
       // Hacer que el peso de calamardo sea 40
       calamardo.peso(40)
       // hacer que calamardo practique correrEnLaPlaya (NO SE PUEDE!)
-      calamardo.hacerRutina(correrEnLaPlaya)
+      assert.throwsExceptionWithMessage("No pesa mas de 50", { calamardo.hacerRutina(correrEnLaPlaya) }
+      )
       // el peso de calamardo debería ser 40 
       assert.equals(40, calamardo.peso())
-  } 
-    
+  }
+
   test "2.2.1 test atleta running" {
       // hacer que bob practique correrEnLaPlaya
       bob.hacerRutina(correrEnLaPlaya)
@@ -107,7 +108,7 @@ describe "rutinas" {
 
   test "2.2.3 test atleta remo" {
       // hacer que bob practique remarEnElDelta( NO SE PUEDE!)
-      bob.hacerRutina(remarEnElDelta)
+      assert.throwsExceptionWithMessage("No quema mas de 10.000 calorias", { bob.hacerRutina(remarEnElDelta) })
       // el peso de bob debería ser 40 
       assert.equals(40, bob.peso())
   }
